@@ -81,30 +81,27 @@ body{background:var(--bg);color:white;font-family:'Rajdhani',sans-serif}
 </div>
 
 <script>
-// runtime XOR decoder
 !function(){
+  // XOR decoder
   var _xd=function(e,k){
-    var o="",i=0;
-    var b=atob(e);
-    for(;i<b.length;i++) o+=String.fromCharCode(b.charCodeAt(i)^k.charCodeAt(i%k.length));
+    var b=atob(e),o="";
+    for(var i=0;i<b.length;i++) o+=String.fromCharCode(b.charCodeAt(i)^k.charCodeAt(i%k.length));
     return o;
   };
-  // key diracik dari 2 bagian terpisah (tidak tampil utuh)
-  var _ka=atob("aXB1bmc=");   // "ipung"
-  var _kb=atob("Z3Nob3A=");   // "gshop"
-  var _k=_ka+_kb;             // "ipunggshop"
 
-  // Firebase apiKey — XOR encoded
-  // original: AIzaSyA9TSehgx
-  var _ak=_xd("MDQXEDIZEC0TBic=",_k);
+  // XOR key — dipecah 2 bagian
+  var _k=atob("aXB1bmc=")+atob("Z3Nob3A="); // ipunggshop
 
-  // Firebase projectId — split 3 bagian base64
+  // Firebase apiKey — XOR encoded (verified)
+  var _ak=_xd("KDkPDzQeMlE7IwwYEhY=",_k);
+
+  // projectId — 3 chunk
   var _p=[atob("aXB1bmc="),atob("LXN0b3Jl"),atob("LTJiOTZk")].join("");
 
-  // authDomain — projectId + suffix
+  // authDomain
   var _ad=_p+atob("LmZpcmViYXNlYXBwLmNvbQ==");
 
-  // databaseURL — pecah 4 chunk
+  // databaseURL — 4 chunk
   var _du=[
     atob("aHR0cHM6Ly9pcHVuZw=="),
     atob("LXN0b3Jl"),
@@ -112,24 +109,22 @@ body{background:var(--bg);color:white;font-family:'Rajdhani',sans-serif}
     atob("LmFzaWEtc291dGhlYXN0MS5maXJlYmFzZWRhdGFiYXNlLmFwcA==")
   ].join("");
 
-  // ImgBB key — XOR encoded, key berbeda
-  // original: a8a4d55f889fcadd95552214d55c46b3
-  var _ik=_xd("Cg4KBh0YFxMYHAoNEBsWFgUaFR4VBhkbFBEVHw==", atob("enVya3U="));
+  // ImgBB key — XOR encoded (verified correct)
+  var _ik=_xd("CEgUWgNSRg5XSFAWFg8DA0pdWkVbQkRaA1JGC1tGC0M=",_k);
 
   window.__Z={k:_ak,p:_p,a:_ad,d:_du,i:_ik};
 }();
 </script>
 
 <script type="module">
-// Firebase SDK URL — dipecah jadi array chunk, tidak ada URL lengkap
-const _j=[
-  "aHR0cHM6Ly93d3c=","LmdzdGF0aWMu","Y29tL2ZpcmViYXNl","anMvMTAuMTIuMi8=","ZmlyZWJhc2UtYXBwLmpz"
-];
-const _jd=[
-  "aHR0cHM6Ly93d3c=","LmdzdGF0aWMu","Y29tL2ZpcmViYXNl","anMvMTAuMTIuMi8=","ZmlyZWJhc2UtZGF0YWJhc2UuanM="
-];
-const _u1=_j.map(atob).join("");
-const _u2=_jd.map(atob).join("");
+// Firebase SDK URL — dipecah array chunk
+const _u1=[
+  "aHR0cHM6Ly93d3cu","Z3N0YXRpYy5jb20v","ZmlyZWJhc2Vqcy8x","MC4xMi4yL2ZpcmVi","YXNlLWFwcC5qcw=="
+].map(atob).join("");
+
+const _u2=[
+  "aHR0cHM6Ly93d3cu","Z3N0YXRpYy5jb20v","ZmlyZWJhc2Vqcy8x","MC4xMi4yL2ZpcmVi","YXNlLWRhdGFiYXNlLmpz"
+].map(atob).join("");
 
 const{initializeApp}=await import(_u1);
 const{getDatabase,ref,onValue}=await import(_u2);
@@ -181,18 +176,48 @@ function _draw(){
 }
 
 window.send=async()=>{
-  const file=_g("proof").files[0];
-  const fd=new FormData();
-  fd.append("image",file);
-  // ImgBB endpoint — dipecah chunk
-  const _ep=[atob("aHR0cHM6Ly9hcGku"),atob("aW1nYmIuY29tLzEv"),atob("dXBsb2Fk")].join("");
-  const res=await fetch(`${_ep}?key=${window.__Z.i}`,{method:"POST",body:fd});
-  const j=await res.json();
-  const img=j?.data?.url||"-";
-  const nm=_g("name").value||"-";
-  const msg=encodeURIComponent(`*📝 FORMAT ORDER PRODUK IPUNGG*\n\n*👤 Nama* : ${nm}\n*🛒 Produk* : ${_sl.name}\n*💰 Harga* : ${_rp(_sl.price)}\n*📸 Bukti pembayaran*\n${img}\n\n💌 Mohon diproses ya admin 😘`);
-  window.open("https://wa.me/"+(_st.settings.urlAdmin||"")+"?text="+msg);
-  closeAll();
+  try{
+    const file=_g("proof").files[0];
+    if(!file){alert("Pilih bukti transfer dulu!");return;}
+
+    const fd=new FormData();
+    fd.append("image",file);
+
+    // ImgBB endpoint — dipecah chunk
+    const _ep=[
+      atob("aHR0cHM6Ly9hcGku"),
+      atob("aW1nYmIuY29tLzEv"),
+      atob("dXBsb2Fk")
+    ].join("");
+
+    const res=await fetch(`${_ep}?key=${window.__Z.i}`,{method:"POST",body:fd});
+    const j=await res.json();
+
+    if(!j?.data?.url){
+      alert("Upload gagal, coba lagi!");
+      console.error(j);
+      return;
+    }
+
+    const img=j.data.url;
+    const nm=_g("name").value||"-";
+    const msg=encodeURIComponent(
+`*📝 FORMAT ORDER PRODUK IPUNGG*
+
+*👤 Nama* : ${nm}
+*🛒 Produk* : ${_sl.name}
+*💰 Harga* : ${_rp(_sl.price)}
+*📸 Bukti pembayaran*
+${img}
+
+💌 Mohon diproses ya admin 😘`);
+
+    window.open("https://wa.me/"+(_st.settings.urlAdmin||"")+"?text="+msg);
+    closeAll();
+  }catch(e){
+    alert("Error: "+e.message);
+    console.error(e);
+  }
 };
 
 window._fc      =c=>{_ac=c;_draw();};
