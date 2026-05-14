@@ -55,7 +55,7 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 #app{display:none}
 
 /* NAVBAR */
-.navbar{height:62px;display:flex;justify-content:space-between;align-items:center;padding:0 16px;background:rgba(5,2,15,.85);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+.navbar{height:62px;display:flex;justify-content:space-between;align-items:center;padding:0 16px;position:sticky;top:0;z-index:900;background:rgba(5,2,15,.85);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
 .logo{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:900;color:var(--neon);text-shadow:0 0 12px rgba(0,245,255,.4);display:flex;align-items:center;gap:7px}
 .logo b{color:var(--purple)}
 .hamburger{font-size:20px;background:rgba(0,245,255,.07);border:1px solid rgba(0,245,255,.15);color:var(--neon);border-radius:10px;width:38px;height:38px;cursor:pointer;display:flex;align-items:center;justify-content:center}
@@ -88,7 +88,7 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 .featcard{flex-shrink:0;width:195px;border-radius:18px;overflow:hidden;background:var(--card2);border:1px solid var(--border);cursor:pointer;transition:transform .2s}
 .featcard:active{transform:scale(.97)}
 .featthumb{position:relative}
-.featthumb img{width:100%;height:135px;object-fit:contain;background:#07041a;padding:10px;display:block}
+.featthumb img{width:100%;height:135px;object-fit:cover;display:block;transition:transform .3s}
 .featbadge{position:absolute;top:8px;left:8px;background:linear-gradient(135deg,var(--gold),#e67e00);color:#000;font-size:10px;font-weight:800;padding:3px 8px;border-radius:99px}
 .featbody{padding:10px 12px 12px}
 .featname{font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -99,8 +99,8 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 .pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;padding:0 12px 100px}
 .pcard{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;cursor:pointer;transition:transform .18s}
 .pcard:active{transform:scale(.97)}
-.pthumb{position:relative;background:#07041a;aspect-ratio:1;overflow:hidden}
-.pthumb img{width:100%;height:100%;object-fit:contain;padding:12px;transition:transform .3s;display:block}
+.pthumb{position:relative;aspect-ratio:1;overflow:hidden}
+.pthumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
 .pcard:hover .pthumb img{transform:scale(1.07)}
 .pinb{position:absolute;top:8px;left:8px;background:linear-gradient(135deg,var(--gold),#e67e00);color:#000;font-size:10px;font-weight:800;padding:3px 8px;border-radius:99px}
 .pbody{padding:11px 12px 13px}
@@ -312,26 +312,23 @@ function draw(){
 
   const all=Object.values(st.products||{});
   const pinned=all.filter(x=>x.pinned);
-  const grid=ac==='all'?all:all.filter(x=>x.category===ac);
-
-  // simpan semua produk ke global array supaya bisa dipanggil by index
   window.__prods=all;
 
-  g('featLabel').style.display=pinned.length?'block':'none';
-  g('featured').innerHTML=pinned.map((x,i)=>{
-    const idx=all.indexOf(x);
-    return `<div class="featcard">
-      <div class="featthumb">
-        <img src="${x.thumbnail||''}" onerror="this.src=''">
-        <div class="featbadge">⭐ PINNED</div>
-      </div>
-      <div class="featbody">
-        <div class="featname">${x.name||''}</div>
-        <div class="featprice">${rp(x.price||0)}</div>
-        <button class="featbtn" onclick="_od(${idx})">ORDER 💖</button>
-      </div>
-    </div>`;
-  }).join('');
+  // Tab "Semua" = pinned only
+  // Tab kategori = produk kategori itu, pinned di atas dulu
+  let grid;
+  if(ac==='all'){
+    grid=pinned;
+  } else {
+    const catProds=all.filter(x=>x.category===ac);
+    const catPinned=catProds.filter(x=>x.pinned);
+    const catRest=catProds.filter(x=>!x.pinned);
+    grid=[...catPinned,...catRest];
+  }
+
+  // Featured row hanya tampil di tab kategori (bukan semua)
+  g('featLabel').style.display='none';
+  g('featured').innerHTML='';
 
   if(!grid.length){
     g('products').innerHTML=`<div class="empty"><span>📦</span>Belum ada produk</div>`;
@@ -385,4 +382,5 @@ window.send=async()=>{
 function toast(msg){const t=g('toast');t.innerText=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2800)}
 </script>
 </body>
-</htm
+  </html>
+        
