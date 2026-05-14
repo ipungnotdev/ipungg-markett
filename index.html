@@ -810,6 +810,19 @@ body.welcoming #featuredLabel {
 </div><!-- /#main-content -->
 
 <script>
+// Welcome hide — jalan langsung, ga nunggu Firebase
+(function(){
+  setTimeout(function(){
+    var ws=document.getElementById("welcome-screen");
+    var mc=document.getElementById("main-content");
+    if(ws) ws.classList.add("hide");
+    if(mc) mc.style.display="block";
+    setTimeout(function(){ if(ws) ws.style.display="none"; },700);
+  },2500);
+})();
+</script>
+
+<script>
 !function(){
   var _xd=function(e,k){
     var b=atob(e),o="";
@@ -835,14 +848,4 @@ body.welcoming #featuredLabel {
 const _u1=["aHR0cHM6Ly93d3cu","Z3N0YXRpYy5jb20v","ZmlyZWJhc2Vqcy8x","MC4xMi4yL2ZpcmVi","YXNlLWFwcC5qcw=="].map(atob).join("");
 const _u2=["aHR0cHM6Ly93d3cu","Z3N0YXRpYy5jb20v","ZmlyZWJhc2Vqcy8x","MC4xMi4yL2ZpcmVi","YXNlLWRhdGFiYXNlLmpz"].map(atob).join("");
 const{initializeApp}=await import(_u1);
-const{getDatabase,ref,onValue}=await import(_u2);
-
-const _app=initializeApp({apiKey:window.__Z.k,authDomain:window.__Z.a,databaseURL:window.__Z.d,projectId:window.__Z.p});
-const _db=getDatabase(_app);
-
-const _rp=n=>new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',minimumFractionDigits:0}).format(n);
-const _g=id=>document.getElementById(id);
-
-let _st={}, _sl={}, _ac="all", _sq="";
-
-  
+const{getDatabase,ref,o
