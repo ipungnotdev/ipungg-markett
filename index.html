@@ -27,6 +27,22 @@ body {
   font-family: 'Syne', sans-serif;
   overflow-x: hidden;
 }
+body.welcoming {
+  overflow: hidden;
+}
+body.welcoming .navbar,
+body.welcoming .banner-wrap,
+body.welcoming .search-wrap,
+body.welcoming .section-label,
+body.welcoming .cat-cards,
+body.welcoming .featured-scroll,
+body.welcoming .products-grid,
+body.welcoming .copyright,
+body.welcoming #featured,
+body.welcoming #allLabel,
+body.welcoming #featuredLabel {
+  visibility: hidden;
+}
 
 /* ─── WELCOME SPLASH ─── */
 #welcome-screen {
@@ -706,8 +722,8 @@ body {
 <div id="welcome-screen">
   <div class="welcome-bg"></div>
   <div class="wave-emoji">👋</div>
-  <div class="welcome-title">Welcome to<br>IPUNGG SHOP</div>
-  <div class="welcome-sub">Official Store</div>
+  <div class="welcome-title">Welcome Di<br>IPUNGG SHOP</div>
+  <div class="welcome-sub">Official Website Store</div>
   <div class="welcome-loader"><div class="welcome-loader-bar"></div></div>
 </div>
 
@@ -826,21 +842,4 @@ const _g=id=>document.getElementById(id);
 let _st={}, _sl={}, _ac="all", _sq="";
 
 // Welcome screen auto-hide after loader
-setTimeout(()=>{
-  const ws=_g("welcome-screen");
-  if(ws) ws.classList.add("hide");
-  setTimeout(()=>{ if(ws) ws.style.display="none"; },700);
-},2800);
-
-onValue(ref(_db,"store"),snap=>{
-  _st=snap.val()||{settings:{},products:{},categories:{}};
-  _draw();
-});
-
-function _draw(){
-  const s=_st.settings||{};
-
-  // links
-  _g("wa").href="https://wa.me/"+(s.urlAdmin||"");
-  _g("group").href=s.urlGroup||"#";
-  _g("c
+document.body.classList.add("welcomi
