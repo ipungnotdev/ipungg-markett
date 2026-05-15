@@ -77,29 +77,10 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 .seclabel{padding:16px 14px 8px;font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted)}
 
 /* CATEGORIES */
-.cats{display:flex;gap:8px;overflow-x:auto;padding:0 12px 10px;scrollbar-width:none}
+.cats{display:flex;gap:8px;overflow-x:auto;padding:0 12px 4px;scrollbar-width:none}
 .cats::-webkit-scrollbar{display:none}
-.cat{
-  padding:7px 16px;border-radius:99px;flex-shrink:0;
-  background:var(--card);border:1px solid var(--border);
-  white-space:nowrap;cursor:pointer;font-size:12px;font-weight:700;color:var(--muted);
-  transition:all .25s cubic-bezier(.4,0,.2,1);
-  position:relative;overflow:hidden;
-}
-.cat::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,var(--purple),var(--neon));
-  opacity:0;transition:opacity .25s;z-index:0;
-}
-.cat > *,.cat{z-index:1}
-.cat:active{transform:scale(.92)}
-.cat.on{
-  color:#fff;border-color:var(--neon);
-  box-shadow:0 0 14px rgba(155,48,255,.5),0 0 4px rgba(0,245,255,.3);
-  transform:scale(1.05);
-}
-.cat.on::before{opacity:1}
-.cat:not(.on):hover{color:#fff;border-color:rgba(155,48,255,.6);background:rgba(155,48,255,.15);transform:translateY(-1px)}
+.cat{padding:8px 18px;border-radius:99px;flex-shrink:0;background:var(--card);border:1px solid var(--border);white-space:nowrap;cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);transition:all .2s}
+.cat.on,.cat:active{background:rgba(155,48,255,.2);border-color:var(--purple);color:#fff;box-shadow:0 0 10px rgba(155,48,255,.2)}
 
 /* PRODUCT GRID */
 .pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 12px 100px}
@@ -165,8 +146,8 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 <div id="ws">
   <div class="wsglow"></div>
   <div class="wshand">👋</div>
-  <div class="wstitle">WelcomeDi<br>IPUNGG SHOP</div>
-  <div class="wssub">Official Website Store</div>
+  <div class="wstitle">Welcome to<br>IPUNGG SHOP</div>
+  <div class="wssub">Official Store</div>
   <div class="wsbar"><div class="wsbar-fill"></div></div>
 </div>
 
@@ -321,13 +302,15 @@ function draw(){
   g('dlQris').href=s.qrisUrl||'';
 
   const cats=Object.values(st.categories||{});
-  g('cats').innerHTML=`<div class="cat ${ac==='all'?'on':''}" onclick="_fc('all')"><span>🏪 Semua</span></div>`
-    +cats.map(c=>`<div class="cat ${ac===c.name?'on':''}" onclick="_fc('${c.name}')"><span>${c.name}</span></div>`).join('');
+  g('cats').innerHTML=`<div class="cat ${ac==='all'?'on':''}" onclick="_fc('all')">🏪 Semua</div>`
+    +cats.map(c=>`<div class="cat ${ac===c.name?'on':''}" onclick="_fc('${c.name}')">${c.name}</div>`).join('');
 
   const all=Object.values(st.products||{});
   window.__prods=all;
 
-  // Semua tab & kategori: pinned paling atas, sisanya di bawah
+  const all=Object.values(st.products||{});
+  window.__prods=all;
+
   let grid;
   if(ac==='all'){
     const pinned=all.filter(x=>x.pinned);
@@ -340,7 +323,6 @@ function draw(){
     grid=[...catPinned,...catRest];
   }
 
-  // Featured row hanya tampil di tab kategori (bukan semua)
   g('featLabel').style.display='none';
   g('featured').innerHTML='';
 
@@ -396,5 +378,5 @@ window.send=async()=>{
 function toast(msg){const t=g('toast');t.innerText=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2800)}
 </script>
 </body>
-                                                 </html>
+        </html>
   
