@@ -269,13 +269,12 @@
   "KTsKICBzZXRUaW1lb3V0KCgpPT50LmNsYXNzTGlzdC5yZW1vdmUoJ29uJyksMjgwMCk7Cn0KPC9zY3JpcHQ+CjwvYm9keT4KPC9o",
   "dG1sPgo="
   ].join('');
-  // decode base64 ke bytes lalu ke string UTF-8
+  
   var _b=atob(_c);
   var _bytes=new Uint8Array(_b.length);
   for(var i=0;i<_b.length;i++) _bytes[i]=_b.charCodeAt(i);
   var _h=new TextDecoder('utf-8').decode(_bytes);
-  // tulis lewat iframe supaya module script jalan
-  var _f=document.createElement('iframe');
+var _f=document.createElement('iframe');
   _f.style.cssText='position:fixed;inset:0;width:100vw;height:100vh;border:none;';
   _f.sandbox='allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-top-navigation';
   document.body.appendChild(_f);
