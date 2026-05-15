@@ -51,7 +51,6 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 @keyframes lb{to{width:100%}}
 @keyframes su{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 
-/* APP HIDDEN ON LOAD */
 #app{display:none}
 
 /* NAVBAR */
@@ -66,8 +65,7 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 .sidemenu{position:fixed;right:-280px;top:0;width:260px;height:100vh;background:#09041e;border-left:1px solid var(--border);padding:24px 16px;transition:.35s cubic-bezier(.4,0,.2,1);z-index:3000;display:flex;flex-direction:column;gap:8px}
 .sidemenu.open{right:0}
 .sidehead{font-family:'Orbitron',sans-serif;font-size:14px;color:var(--neon);margin-bottom:12px;padding-bottom:14px;border-bottom:1px solid var(--border)}
-.sidelink{display:flex;align-items:center;gap:10px;padding:13px 14px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text);text-decoration:none;font-size:13px;font-weight:600;transition:background .2s}
-.sidelink:active{background:rgba(155,48,255,.15)}
+.sidelink{display:flex;align-items:center;gap:10px;padding:13px 14px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text);text-decoration:none;font-size:13px;font-weight:600}
 
 /* BANNER */
 .banwrap{padding:12px 12px 0}
@@ -76,30 +74,25 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 /* SECTION LABEL */
 .seclabel{padding:16px 14px 8px;font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted)}
 
-/* CATEGORIES */
-.cats{display:flex;gap:8px;overflow-x:auto;padding:0 12px 10px;scrollbar-width:none}
+/* CATEGORIES — simple premium */
+.cats{display:flex;gap:8px;overflow-x:auto;padding:0 12px 4px;scrollbar-width:none}
 .cats::-webkit-scrollbar{display:none}
 .cat{
-  padding:7px 16px;border-radius:99px;flex-shrink:0;
+  padding:8px 18px;border-radius:99px;flex-shrink:0;
   background:var(--card);border:1px solid var(--border);
-  white-space:nowrap;cursor:pointer;font-size:12px;font-weight:700;color:var(--muted);
-  transition:all .25s cubic-bezier(.4,0,.2,1);
-  position:relative;overflow:hidden;
+  white-space:nowrap;cursor:pointer;
+  font-size:13px;font-weight:600;color:var(--muted);
+  transition:color .2s,border-color .2s,background .2s;
 }
-.cat::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,var(--purple),var(--neon));
-  opacity:0;transition:opacity .25s;z-index:0;
-}
-.cat > *,.cat{z-index:1}
-.cat:active{transform:scale(.92)}
 .cat.on{
-  color:#fff;border-color:var(--neon);
-  box-shadow:0 0 14px rgba(155,48,255,.5),0 0 4px rgba(0,245,255,.3);
-  transform:scale(1.05);
+  background:rgba(155,48,255,.18);
+  border-color:var(--purple);
+  color:#fff;
 }
-.cat.on::before{opacity:1}
-.cat:not(.on):hover{color:#fff;border-color:rgba(155,48,255,.6);background:rgba(155,48,255,.15);transform:translateY(-1px)}
+.cat:not(.on):hover{
+  border-color:rgba(155,48,255,.5);
+  color:var(--text);
+}
 
 /* PRODUCT GRID */
 .pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 12px 100px}
@@ -151,10 +144,7 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 #fname{font-size:11px;color:var(--neon);margin-top:3px}
 .mbtn{width:100%;margin-top:14px;padding:13px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--purple),var(--neon));color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;cursor:pointer;letter-spacing:.3px}
 
-/* COPYRIGHT */
 .copy{text-align:center;padding:28px 10px;font-family:'Orbitron',sans-serif;font-size:11px;color:var(--muted);letter-spacing:1px}
-
-/* TOAST */
 #toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(16px);background:#180d32;border:1px solid var(--border);color:#fff;padding:11px 20px;border-radius:99px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;z-index:9500;white-space:nowrap;pointer-events:none}
 #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
@@ -172,7 +162,6 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 
 <!-- APP -->
 <div id="app">
-
   <nav class="navbar">
     <div class="logo">🛒 IPUNGG<b>SHOP</b></div>
     <button class="hamburger" onclick="toggleMenu()">☰</button>
@@ -191,10 +180,7 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
   <div class="seclabel">KATEGORI</div>
   <div class="cats" id="cats"></div>
 
-  <div class="seclabel" id="featLabel" style="display:none">🔥 FEATURED</div>
-  <div class="featrow" id="featured"></div>
-
-  <div class="seclabel">SEMUA PRODUK</div>
+  <div class="seclabel" id="prodLabel">PRODUK</div>
   <div class="pgrid" id="products"></div>
 
   <div class="copy">© IPUNGG X MEZUKI</div>
@@ -221,8 +207,8 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
       <div class="mpill"></div>
       <button class="mclose" onclick="closeAll()">✕</button>
       <div class="mtitle">💳 PEMBAYARAN QRIS</div>
-      <img id="qrisImg" class="qimg">
-      <a id="dlQris" class="dlbtn" download>⬇ Download QRIS</a>
+      <img id="qrisImg" class="qimg" src="https://img2.pixhost.to/images/7838/725233706_elaina-1778564710301.jpg">
+      <a id="dlQris" class="dlbtn" href="https://img2.pixhost.to/images/7838/725233706_elaina-1778564710301.jpg" download>⬇ Download QRIS</a>
       <div class="flabel">Upload Bukti Transfer</div>
       <label class="uplabel" for="proof">
         <span class="uico">📎</span>
@@ -237,7 +223,7 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 
 <div id="toast"></div>
 
-<!-- WELCOME TIMER — plain script, no dependency -->
+<!-- WELCOME TIMER -->
 <script>
 setTimeout(function(){
   var ws=document.getElementById('ws');
@@ -247,22 +233,21 @@ setTimeout(function(){
   setTimeout(function(){ ws.style.display='none'; },650);
 },2600);
 
-// Fungsi UI dasar — plain script supaya langsung ready
 window.toggleMenu=function(){
   document.getElementById('sideMenu').classList.toggle('open');
   document.getElementById('sideOv').classList.toggle('open');
 };
 window.closeAll=function(){
-  var om=document.getElementById('orderModal');
-  var pm=document.getElementById('payModal');
-  if(om) om.classList.remove('on');
-  if(pm) pm.classList.remove('on');
+  document.getElementById('orderModal').classList.remove('on');
+  document.getElementById('payModal').classList.remove('on');
 };
 window.nextPay=function(){
   var n=document.getElementById('buyerName');
   if(!n||!n.value.trim()){
     var t=document.getElementById('toast');
-    if(t){t.innerText='⚠️ Isi nama kamu dulu!';t.classList.add('on');setTimeout(function(){t.classList.remove('on')},2800);}
+    t.innerText='⚠️ Isi nama kamu dulu!';
+    t.classList.add('on');
+    setTimeout(function(){t.classList.remove('on')},2800);
     return;
   }
   document.getElementById('orderModal').classList.remove('on');
@@ -301,6 +286,8 @@ const g=id=>document.getElementById(id);
 let st={},sel={},ac='all';
 window.__prods=[];
 
+const QRIS='https://img2.pixhost.to/images/7838/725233706_elaina-1778564710301.jpg';
+
 onValue(ref(db,'store'),snap=>{
   st=snap.val()||{settings:{},products:{},categories:{}};
   draw();
@@ -317,37 +304,36 @@ function draw(){
     ?`<video autoplay muted loop playsinline src="${b}"></video>`
     :`<img src="${b}" onerror="this.style.display='none'">`;
 
-  g('qrisImg').src=s.qrisUrl||'';
-  g('dlQris').href=s.qrisUrl||'';
+  // QRIS hardcoded — pakai dari db kalau ada, fallback ke hardcoded
+  const qurl=s.qrisUrl||QRIS;
+  g('qrisImg').src=qurl;
+  g('dlQris').href=qurl;
 
   const cats=Object.values(st.categories||{});
-  g('cats').innerHTML=`<div class="cat ${ac==='all'?'on':''}" onclick="_fc('all')"><span>🏪 Semua</span></div>`
-    +cats.map(c=>`<div class="cat ${ac===c.name?'on':''}" onclick="_fc('${c.name}')"><span>${c.name}</span></div>`).join('');
+  g('cats').innerHTML=
+    `<div class="cat ${ac==='all'?'on':''}" onclick="_fc('all')">🏪 Semua</div>`
+    +cats.map(c=>`<div class="cat ${ac===c.name?'on':''}" onclick="_fc('${c.name}')">${c.name}</div>`).join('');
 
   const all=Object.values(st.products||{});
   window.__prods=all;
 
-  // Semua tab & kategori: pinned paling atas, sisanya di bawah
   let grid;
   if(ac==='all'){
-    const pinned=all.filter(x=>x.pinned);
-    const rest=all.filter(x=>!x.pinned);
-    grid=[...pinned,...rest];
+    // Tab Semua = HANYA produk yang di-pin
+    grid=all.filter(x=>x.pinned);
   } else {
+    // Tab kategori = semua produk di kategori itu, pinned di atas
     const catAll=all.filter(x=>x.category===ac);
     const catPinned=catAll.filter(x=>x.pinned);
     const catRest=catAll.filter(x=>!x.pinned);
     grid=[...catPinned,...catRest];
   }
 
-  // Featured row hanya tampil di tab kategori (bukan semua)
-  g('featLabel').style.display='none';
-  g('featured').innerHTML='';
-
   if(!grid.length){
     g('products').innerHTML=`<div class="empty"><span>📦</span>Belum ada produk</div>`;
     return;
   }
+
   g('products').innerHTML=grid.map(x=>{
     const idx=all.indexOf(x);
     return `<div class="pcard">
@@ -366,6 +352,7 @@ function draw(){
 }
 
 window._fc=c=>{ac=c;draw()};
+
 window._od=idx=>{
   const x=window.__prods[idx];
   if(!x)return;
@@ -378,23 +365,39 @@ window._od=idx=>{
 
 window.send=async()=>{
   const file=g('proof').files[0];
-  if(!file){toast('⚠️ Pilih bukti transfer dulu!');return}
-  toast('⏳ Mengupload...');
+  if(!file){_toast('⚠️ Pilih bukti transfer dulu!');return}
+  _toast('⏳ Mengupload...');
   try{
-    const fd=new FormData();fd.append('image',file);
+    const fd=new FormData();
+    fd.append('image',file);
     const ep=[atob('aHR0cHM6Ly9hcGku'),atob('aW1nYmIuY29tLzEv'),atob('dXBsb2Fk')].join('');
     const res=await fetch(`${ep}?key=${window.__Z.i}`,{method:'POST',body:fd});
     const j=await res.json();
-    if(!j?.data?.url){toast('❌ Upload gagal, coba lagi');return}
+    if(!j?.data?.url){_toast('❌ Upload gagal, coba lagi');return}
     const nm=g('buyerName').value||'-';
-    const msg=encodeURIComponent(`*📝 FORMAT ORDER PRODUK IPUNGG*\n\n*👤 Nama* : ${nm}\n*🛒 Produk* : ${sel.name}\n*💰 Harga* : ${rp(sel.price)}\n*📸 Bukti pembayaran*\n${j.data.url}\n\n💌 Mohon diproses ya admin 😘`);
+    const msg=encodeURIComponent(
+`*📝 FORMAT ORDER PRODUK IPUNGG*
+
+*👤 Nama* : ${nm}
+*🛒 Produk* : ${sel.name}
+*💰 Harga* : ${rp(sel.price)}
+*📸 Bukti pembayaran*
+${j.data.url}
+
+💌 Mohon diproses ya admin 😘`);
     window.open('https://wa.me/'+(st.settings?.urlAdmin||'')+'?text='+msg);
-    closeAll();toast('✅ Order terkirim!');
-  }catch(e){toast('❌ '+e.message)}
+    closeAll();
+    _toast('✅ Order terkirim!');
+  }catch(e){_toast('❌ '+e.message)}
 };
 
-function toast(msg){const t=g('toast');t.innerText=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2800)}
+function _toast(msg){
+  const t=g('toast');
+  t.innerText=msg;
+  t.classList.add('on');
+  setTimeout(()=>t.classList.remove('on'),2800);
+}
 </script>
 </body>
-    </html>
+                                         </html>
       
