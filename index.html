@@ -12,7 +12,7 @@
   --neon:#00f5ff;--gold:#ffd700;--text:#e8e0ff;--muted:#7a6a9a;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;overflow-x:hidden;scroll-behavior: smooth}
+body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;overflow-x:hidden}
 
 /* WELCOME */
 #ws{
@@ -76,44 +76,11 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 /* SECTION LABEL */
 .seclabel{padding:16px 14px 8px;font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted)}
 
-/* CATEGORIES - UPDATED WITH ANIMATIONS */
-.cats{display:flex;gap:10px;overflow-x:auto;padding:0 12px 12px;scrollbar-width:none}
+/* CATEGORIES */
+.cats{display:flex;gap:8px;overflow-x:auto;padding:0 12px 4px;scrollbar-width:none}
 .cats::-webkit-scrollbar{display:none}
-.cat{
-  padding:8px 20px;border-radius:99px;flex-shrink:0;background:var(--card);
-  border:1px solid var(--border);white-space:nowrap;cursor:pointer;
-  font-size:13px;font-weight:600;color:var(--muted);
-  transition:all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  position: relative; overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-/* Shine Effect */
-.cat::after {
-  content: ''; position: absolute; top: 0; left: -100%;
-  width: 50%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-  transform: skewX(-20deg);
-  transition: 0.5s;
-}
-.cat:hover::after, .cat.on::after { left: 150%; transition: 0.7s ease-in-out; }
-
-/* Hover & Active State */
-.cat:hover {
-  transform: translateY(-2px) scale(1.02);
-  color: #fff;
-  border-color: var(--neon);
-  box-shadow: 0 4px 12px rgba(0, 245, 255, 0.25);
-  background: rgba(155,48,255,0.1);
-}
-
-.cat.on, .cat:active {
-  background: linear-gradient(135deg, var(--purple), #6a0dad);
-  color: #fff;
-  border-color: var(--neon);
-  box-shadow: 0 0 15px rgba(155,48,255,0.6), inset 0 0 10px rgba(0,0,0,0.2);
-  transform: scale(1.05);
-}
+.cat{padding:8px 18px;border-radius:99px;flex-shrink:0;background:var(--card);border:1px solid var(--border);white-space:nowrap;cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);transition:all .2s}
+.cat.on,.cat:active{background:rgba(155,48,255,.2);border-color:var(--purple);color:#fff;box-shadow:0 0 10px rgba(155,48,255,.2)}
 
 /* FEATURED */
 .featrow{display:flex;gap:11px;overflow-x:auto;padding:0 12px 4px;scrollbar-width:none}
@@ -128,46 +95,25 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 .featprice{font-size:13px;font-weight:800;color:var(--neon)}
 .featbtn{margin-top:8px;width:100%;padding:7px;border:none;border-radius:9px;background:linear-gradient(135deg,var(--purple),#5200cc);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer}
 
-/* PRODUCT GRID - UPDATED FOR BETTER THUMBNAILS */
-.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 12px 100px}
-.pcard{
-  background:var(--card);border:1px solid var(--border);border-radius:16px;
-  overflow:hidden;cursor:pointer;transition:transform .18s;
-  display:flex;flex-direction:column;
-}
-.pcard:active{transform:scale(.96)}
-
-/* Thumb Update: Aspect Ratio 4:3, Contain to show full image */
-.pthumb{
-  position:relative;width:100%;aspect-ratio:4/3; /* Landscape ratio */
-  background:#0a0618; /* Darker bg for contrast */
-  overflow:hidden;
-  display:flex;align-items:center;justify-content:center;
-}
-.pthumb img{
-  width:100%;height:100%;object-fit:contain; /* Changed from cover to contain */
-  display:block;transition:transform .4s;
-}
-.pcard:hover .pthumb img{transform:scale(1.05)}
-.pinb{position:absolute;top:6px;left:6px;background:linear-gradient(135deg,var(--gold),#e67e00);color:#000;font-size:9px;font-weight:800;padding:2px 6px;border-radius:99px;box-shadow:0 2px 4px rgba(0,0,0,0.3)}
-
-.pbody{padding:8px 10px 12px;display:flex;flex-direction:column;flex-grow:1}
-.pname{font-size:12px;font-weight:700;color:#fff;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.3;min-height: 2.6em;}
-.pprice{font-size:14px;font-weight:800;color:var(--neon);margin-top:auto; margin-bottom:8px;letter-spacing:0.3px}
-.pdiv{display:none} /* Hidden for cleaner look */
-.pbtn{
-  width:100%;padding:8px 0;border:none;border-radius:8px;
-  background:linear-gradient(135deg,var(--purple),#5200cc);color:#fff;
-  font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:700;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;gap:5px;
-  box-shadow: 0 4px 10px rgba(155, 48, 255, 0.2);
-}
+/* PRODUCT GRID */
+.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;padding:0 12px 100px}
+.pcard{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;cursor:pointer;transition:transform .18s}
+.pcard:active{transform:scale(.97)}
+.pthumb{position:relative;aspect-ratio:1;overflow:hidden}
+.pthumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.pcard:hover .pthumb img{transform:scale(1.07)}
+.pinb{position:absolute;top:8px;left:8px;background:linear-gradient(135deg,var(--gold),#e67e00);color:#000;font-size:10px;font-weight:800;padding:3px 8px;border-radius:99px}
+.pbody{padding:11px 12px 13px}
+.pname{font-size:13px;font-weight:700;color:#fff;margin-bottom:5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.35}
+.pprice{font-size:15px;font-weight:800;color:var(--neon);margin-bottom:10px}
+.pdiv{height:1px;background:var(--border);margin-bottom:10px}
+.pbtn{width:100%;padding:9px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--purple),#5200cc);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
 
 .empty{grid-column:1/-1;text-align:center;padding:50px 20px;color:var(--muted);font-size:14px}
 .empty span{font-size:38px;display:block;margin-bottom:10px}
 
 /* MODALS */
-.mover{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);display:none;align-items:flex-end;justify-content:center;z-index:8000}
+.mover{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);display:none;align-items:flex-end;justify-content:center;z-index:8000}
 .mover.on{display:flex}
 .msheet{background:#0d0820;border-radius:24px 24px 0 0;padding:22px 18px 36px;width:100%;max-width:480px;border-top:1px solid var(--border);animation:sup .32s cubic-bezier(.4,0,.2,1);position:relative;max-height:92vh;overflow-y:auto}
 @keyframes sup{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
@@ -182,17 +128,8 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 .inp{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:var(--card2);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s}
 .inp:focus{border-color:var(--purple)}
 .inp::placeholder{color:var(--muted)}
-
-/* QRIS Styling Update */
-.qimg{
-  width:100%;max-width:240px;display:block;margin:10px auto 15px;
-  border-radius:12px;border:2px solid var(--border);
-  padding:8px;background:#fff;
-  box-shadow:0 0 15px rgba(0,245,255,0.15);
-}
+.qimg{width:195px;display:block;margin:14px auto 8px;border-radius:14px;border:1px solid var(--border)}
 .dlbtn{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;border-radius:12px;border:1px solid var(--border);color:var(--text);text-decoration:none;font-size:13px;font-weight:600;margin-bottom:12px;background:rgba(255,255,255,.03)}
-.dlbtn:active{background:rgba(255,255,255,.1)}
-
 .uplabel{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:18px;border-radius:14px;border:2px dashed var(--border);cursor:pointer;color:var(--muted);font-size:13px;font-weight:600;background:var(--card2);margin-top:5px;transition:border-color .2s,background .2s}
 .uplabel:active{border-color:var(--purple);background:rgba(155,48,255,.08)}
 .uico{font-size:26px}
@@ -204,7 +141,7 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 .copy{text-align:center;padding:28px 10px;font-family:'Orbitron',sans-serif;font-size:11px;color:var(--muted);letter-spacing:1px}
 
 /* TOAST */
-#toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(16px);background:#180d32;border:1px solid var(--border);color:#fff;padding:11px 20px;border-radius:99px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;z-index:9500;white-space:nowrap;pointer-events:none;box-shadow: 0 5px 15px rgba(0,0,0,0.5)}
+#toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(16px);background:#180d32;border:1px solid var(--border);color:#fff;padding:11px 20px;border-radius:99px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;z-index:9500;white-space:nowrap;pointer-events:none}
 #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
@@ -214,8 +151,8 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 <div id="ws">
   <div class="wsglow"></div>
   <div class="wshand">👋</div>
-  <div class="wstitle">Welcome Di<br>IPUNGG SHOP</div>
-  <div class="wssub">Official Website Store</div>
+  <div class="wstitle">Welcome to<br>IPUNGG SHOP</div>
+  <div class="wssub">Official Store</div>
   <div class="wsbar"><div class="wsbar-fill"></div></div>
 </div>
 
@@ -230,9 +167,9 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
   <div class="sideov" id="sideOv" onclick="toggleMenu()"></div>
   <div class="sidemenu" id="sideMenu">
     <div class="sidehead">🛍️ IPUNGG SHOP</div>
-    <a class="sidelink" id="wa" target="_blank">💬 WhatsApp Admin</a>
-    <a class="sidelink" id="group" target="_blank">👥 Group Bot Community</a>
-    <a class="sidelink" id="channel" target="_blank">📢 Channel Official Ipungg</a>
+    <a class="sidelink" id="wa">💬 WhatsApp Admin</a>
+    <a class="sidelink" id="group">👥 Group Bot Community</a>
+    <a class="sidelink" id="channel">📢 Channel Official Ipungg</a>
   </div>
 
   <div class="banwrap" id="banner"></div>
@@ -270,9 +207,8 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
       <div class="mpill"></div>
       <button class="mclose" onclick="closeAll()">✕</button>
       <div class="mtitle">💳 PEMBAYARAN QRIS</div>
-      <!-- QRIS Image with Fallback -->
-      <img id="qrisImg" class="qimg" alt="QRIS Code" onerror="this.onerror=null;this.src='https://placehold.co/300x300/1a1a2e/FFF?text=QRIS+Unavailable';this.style.border='1px solid #333';">
-      <a id="dlQris" class="dlbtn" target="_blank" download>⬇ Download / Buka QRIS</a>
+      <img id="qrisImg" class="qimg">
+      <a id="dlQris" class="dlbtn" download>⬇ Download QRIS</a>
       <div class="flabel">Upload Bukti Transfer</div>
       <label class="uplabel" for="proof">
         <span class="uico">📎</span>
@@ -287,7 +223,7 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 
 <div id="toast"></div>
 
-<!-- WELCOME TIMER -->
+<!-- WELCOME TIMER — plain script, no dependency -->
 <script>
 setTimeout(function(){
   var ws=document.getElementById('ws');
@@ -297,13 +233,16 @@ setTimeout(function(){
   setTimeout(function(){ ws.style.display='none'; },650);
 },2600);
 
-// UI Logic
+// Fungsi UI dasar — plain script supaya langsung ready
 window.toggleMenu=function(){
   document.getElementById('sideMenu').classList.toggle('open');
   document.getElementById('sideOv').classList.toggle('open');
 };
 window.closeAll=function(){
-  document.querySelectorAll('.mover').forEach(el=>el.classList.remove('on'));
+  var om=document.getElementById('orderModal');
+  var pm=document.getElementById('payModal');
+  if(om) om.classList.remove('on');
+  if(pm) pm.classList.remove('on');
 };
 window.nextPay=function(){
   var n=document.getElementById('buyerName');
@@ -321,7 +260,7 @@ window.setFname=function(i){
 };
 </script>
 
-<!-- FIREBASE CONFIG (Obfuscated) -->
+<!-- FIREBASE CONFIG -->
 <script>
 !function(){
   var x=function(e,k){var b=atob(e),o='';for(var i=0;i<b.length;i++)o+=String.fromCharCode(b.charCodeAt(i)^k.charCodeAt(i%k.length));return o};
@@ -364,27 +303,22 @@ function draw(){
     ?`<video autoplay muted loop playsinline src="${b}"></video>`
     :`<img src="${b}" onerror="this.style.display='none'">`;
 
-  // Fix QRIS
-  const qrisUrl = s.qrisUrl||'';
-  if(qrisUrl){
-    g('qrisImg').src = qrisUrl;
-    g('dlQris').href = qrisUrl;
-    g('dlQris').style.display = 'flex';
-  } else {
-    g('dlQris').style.display = 'none';
-  }
+  g('qrisImg').src=s.qrisUrl||'';
+  g('dlQris').href=s.qrisUrl||'';
 
   const cats=Object.values(st.categories||{});
   g('cats').innerHTML=`<div class="cat ${ac==='all'?'on':''}" onclick="_fc('all')">🏪 Semua</div>`
     +cats.map(c=>`<div class="cat ${ac===c.name?'on':''}" onclick="_fc('${c.name}')">${c.name}</div>`).join('');
 
   const all=Object.values(st.products||{});
-  const pinned=all.filter(x=>x.pinned);
   window.__prods=all;
 
   let grid;
   if(ac==='all'){
-    grid=pinned;
+    // Semua produk, pinned di atas
+    const pinned=all.filter(x=>x.pinned);
+    const rest=all.filter(x=>!x.pinned);
+    grid=[...pinned,...rest];
   } else {
     const catProds=all.filter(x=>x.category===ac);
     const catPinned=catProds.filter(x=>x.pinned);
@@ -392,6 +326,7 @@ function draw(){
     grid=[...catPinned,...catRest];
   }
 
+  // Featured row hanya tampil di tab kategori (bukan semua)
   g('featLabel').style.display='none';
   g('featured').innerHTML='';
 
@@ -403,8 +338,49 @@ function draw(){
     const idx=all.indexOf(x);
     return `<div class="pcard">
       <div class="pthumb">
-        <img src="${x.thumbnail||''}" loading="lazy" onerror="this.src='https://placehold.co/400x300/0d0820/7a6a9a?text=No+Image'">
+        <img src="${x.thumbnail||''}" onerror="this.src=''">
         ${x.pinned?'<div class="pinb">⭐ PIN</div>':''}
       </div>
       <div class="pbody">
-        <di
+        <div class="pname">${x.name||'Produk'}</div>
+        <div class="pprice">${rp(x.price||0)}</div>
+        <div class="pdiv"></div>
+        <button class="pbtn" onclick="_od(${idx})">🛒 Order Sekarang</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+window._fc=c=>{ac=c;draw()};
+window._od=idx=>{
+  const x=window.__prods[idx];
+  if(!x)return;
+  sel=x;
+  g('oImg').src=x.thumbnail||'';
+  g('oName').innerText=x.name||'';
+  g('oPrice').innerText=rp(x.price||0);
+  g('orderModal').classList.add('on');
+};
+
+window.send=async()=>{
+  const file=g('proof').files[0];
+  if(!file){toast('⚠️ Pilih bukti transfer dulu!');return}
+  toast('⏳ Mengupload...');
+  try{
+    const fd=new FormData();fd.append('image',file);
+    const ep=[atob('aHR0cHM6Ly9hcGku'),atob('aW1nYmIuY29tLzEv'),atob('dXBsb2Fk')].join('');
+    const res=await fetch(`${ep}?key=${window.__Z.i}`,{method:'POST',body:fd});
+    const j=await res.json();
+    if(!j?.data?.url){toast('❌ Upload gagal, coba lagi');return}
+    const nm=g('buyerName').value||'-';
+    const msg=encodeURIComponent(`*📝 FORMAT ORDER PRODUK IPUNGG*\n\n*👤 Nama* : ${nm}\n*🛒 Produk* : ${sel.name}\n*💰 Harga* : ${rp(sel.price)}\n*📸 Bukti pembayaran*\n${j.data.url}\n\n💌 Mohon diproses ya admin 😘`);
+    window.open('https://wa.me/'+(st.settings?.urlAdmin||'')+'?text='+msg);
+    closeAll();toast('✅ Order terkirim!');
+  }catch(e){toast('❌ '+e.message)}
+};
+
+function toast(msg){const t=g('toast');t.innerText=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2800)}
+</script>
+</body>
+  </html>
+  
