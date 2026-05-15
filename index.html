@@ -77,37 +77,51 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 .seclabel{padding:16px 14px 8px;font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted)}
 
 /* CATEGORIES */
-.cats{display:flex;gap:8px;overflow-x:auto;padding:0 12px 4px;scrollbar-width:none}
+.cats{display:flex;gap:8px;overflow-x:auto;padding:0 12px 10px;scrollbar-width:none}
 .cats::-webkit-scrollbar{display:none}
-.cat{padding:8px 18px;border-radius:99px;flex-shrink:0;background:var(--card);border:1px solid var(--border);white-space:nowrap;cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);transition:all .2s}
-.cat.on,.cat:active{background:rgba(155,48,255,.2);border-color:var(--purple);color:#fff;box-shadow:0 0 10px rgba(155,48,255,.2)}
-
-/* FEATURED */
-.featrow{display:flex;gap:11px;overflow-x:auto;padding:0 12px 4px;scrollbar-width:none}
-.featrow::-webkit-scrollbar{display:none}
-.featcard{flex-shrink:0;width:195px;border-radius:18px;overflow:hidden;background:var(--card2);border:1px solid var(--border);cursor:pointer;transition:transform .2s}
-.featcard:active{transform:scale(.97)}
-.featthumb{position:relative}
-.featthumb img{width:100%;height:135px;object-fit:cover;display:block;transition:transform .3s}
-.featbadge{position:absolute;top:8px;left:8px;background:linear-gradient(135deg,var(--gold),#e67e00);color:#000;font-size:10px;font-weight:800;padding:3px 8px;border-radius:99px}
-.featbody{padding:10px 12px 12px}
-.featname{font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.featprice{font-size:13px;font-weight:800;color:var(--neon)}
-.featbtn{margin-top:8px;width:100%;padding:7px;border:none;border-radius:9px;background:linear-gradient(135deg,var(--purple),#5200cc);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer}
+.cat{
+  padding:7px 16px;border-radius:99px;flex-shrink:0;
+  background:var(--card);border:1px solid var(--border);
+  white-space:nowrap;cursor:pointer;font-size:12px;font-weight:700;color:var(--muted);
+  transition:all .25s cubic-bezier(.4,0,.2,1);
+  position:relative;overflow:hidden;
+}
+.cat::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--purple),var(--neon));
+  opacity:0;transition:opacity .25s;z-index:0;
+}
+.cat > *,.cat{z-index:1}
+.cat:active{transform:scale(.92)}
+.cat.on{
+  color:#fff;border-color:var(--neon);
+  box-shadow:0 0 14px rgba(155,48,255,.5),0 0 4px rgba(0,245,255,.3);
+  transform:scale(1.05);
+}
+.cat.on::before{opacity:1}
+.cat:not(.on):hover{color:#fff;border-color:rgba(155,48,255,.6);background:rgba(155,48,255,.15);transform:translateY(-1px)}
 
 /* PRODUCT GRID */
-.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;padding:0 12px 100px}
-.pcard{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;cursor:pointer;transition:transform .18s}
-.pcard:active{transform:scale(.97)}
-.pthumb{position:relative;aspect-ratio:1;overflow:hidden}
-.pthumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
-.pcard:hover .pthumb img{transform:scale(1.07)}
-.pinb{position:absolute;top:8px;left:8px;background:linear-gradient(135deg,var(--gold),#e67e00);color:#000;font-size:10px;font-weight:800;padding:3px 8px;border-radius:99px}
-.pbody{padding:11px 12px 13px}
-.pname{font-size:13px;font-weight:700;color:#fff;margin-bottom:5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.35}
-.pprice{font-size:15px;font-weight:800;color:var(--neon);margin-bottom:10px}
-.pdiv{height:1px;background:var(--border);margin-bottom:10px}
-.pbtn{width:100%;padding:9px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--purple),#5200cc);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
+.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 12px 100px}
+.pcard{
+  background:var(--card);border:1px solid var(--border);border-radius:16px;
+  overflow:hidden;cursor:pointer;transition:transform .18s,box-shadow .18s;
+  display:flex;flex-direction:column;
+}
+.pcard:active{transform:scale(.96);box-shadow:0 0 18px rgba(155,48,255,.25)}
+.pthumb{
+  position:relative;width:100%;aspect-ratio:4/3;
+  background:#08051a;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.pthumb img{width:100%;height:100%;object-fit:contain;padding:6px;display:block;transition:transform .35s}
+.pcard:hover .pthumb img{transform:scale(1.06)}
+.pinb{position:absolute;top:6px;left:6px;background:linear-gradient(135deg,var(--gold),#e67e00);color:#000;font-size:9px;font-weight:800;padding:2px 7px;border-radius:99px}
+.pbody{padding:8px 10px 10px;display:flex;flex-direction:column;flex:1}
+.pname{font-size:12px;font-weight:700;color:#fff;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.35;min-height:2.7em}
+.pprice{font-size:13px;font-weight:800;color:var(--neon);margin-bottom:7px;margin-top:auto}
+.pdiv{height:1px;background:var(--border);margin-bottom:7px}
+.pbtn{width:100%;padding:8px;border:none;border-radius:9px;background:linear-gradient(135deg,var(--purple),#5200cc);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px}
 
 .empty{grid-column:1/-1;text-align:center;padding:50px 20px;color:var(--muted);font-size:14px}
 .empty span{font-size:38px;display:block;margin-bottom:10px}
@@ -151,8 +165,8 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 <div id="ws">
   <div class="wsglow"></div>
   <div class="wshand">👋</div>
-  <div class="wstitle">Welcome to<br>IPUNGG SHOP</div>
-  <div class="wssub">Official Store</div>
+  <div class="wstitle">WelcomeDi<br>IPUNGG SHOP</div>
+  <div class="wssub">Official Website Store</div>
   <div class="wsbar"><div class="wsbar-fill"></div></div>
 </div>
 
@@ -307,22 +321,22 @@ function draw(){
   g('dlQris').href=s.qrisUrl||'';
 
   const cats=Object.values(st.categories||{});
-  g('cats').innerHTML=`<div class="cat ${ac==='all'?'on':''}" onclick="_fc('all')">🏪 Semua</div>`
-    +cats.map(c=>`<div class="cat ${ac===c.name?'on':''}" onclick="_fc('${c.name}')">${c.name}</div>`).join('');
+  g('cats').innerHTML=`<div class="cat ${ac==='all'?'on':''}" onclick="_fc('all')"><span>🏪 Semua</span></div>`
+    +cats.map(c=>`<div class="cat ${ac===c.name?'on':''}" onclick="_fc('${c.name}')"><span>${c.name}</span></div>`).join('');
 
   const all=Object.values(st.products||{});
   window.__prods=all;
 
+  // Semua tab & kategori: pinned paling atas, sisanya di bawah
   let grid;
   if(ac==='all'){
-    // Semua produk, pinned di atas
     const pinned=all.filter(x=>x.pinned);
     const rest=all.filter(x=>!x.pinned);
     grid=[...pinned,...rest];
   } else {
-    const catProds=all.filter(x=>x.category===ac);
-    const catPinned=catProds.filter(x=>x.pinned);
-    const catRest=catProds.filter(x=>!x.pinned);
+    const catAll=all.filter(x=>x.category===ac);
+    const catPinned=catAll.filter(x=>x.pinned);
+    const catRest=catAll.filter(x=>!x.pinned);
     grid=[...catPinned,...catRest];
   }
 
@@ -382,5 +396,5 @@ window.send=async()=>{
 function toast(msg){const t=g('toast');t.innerText=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2800)}
 </script>
 </body>
-  </html>
+                                                 </html>
   
