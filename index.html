@@ -275,6 +275,7 @@
   for(var i=0;i<_b.length;i++) _bytes[i]=_b.charCodeAt(i);
   var _h=new TextDecoder('utf-8').decode(_bytes);
 var _f=document.createElement('iframe');
+
   _f.style.cssText='position:fixed;inset:0;width:100vw;height:100vh;border:none;';
   _f.sandbox='allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-top-navigation';
   document.body.appendChild(_f);
