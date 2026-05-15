@@ -19,6 +19,7 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
   position:fixed;inset:0;z-index:9999;background:var(--bg);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
   transition:opacity .6s ease,transform .6s ease;
+  pointer-events:none;
 }
 #ws.out{opacity:0;transform:scale(1.04);pointer-events:none}
 .wsglow{position:absolute;inset:0;overflow:hidden;pointer-events:none}
@@ -81,32 +82,27 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 .cat{padding:8px 18px;border-radius:99px;flex-shrink:0;background:var(--card);border:1px solid var(--border);white-space:nowrap;cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);transition:all .2s}
 .cat.on,.cat:active{background:rgba(155,48,255,.2);border-color:var(--purple);color:#fff;box-shadow:0 0 10px rgba(155,48,255,.2)}
 
-/* FEATURED */
-.featrow{display:flex;gap:11px;overflow-x:auto;padding:0 12px 4px;scrollbar-width:none}
-.featrow::-webkit-scrollbar{display:none}
-.featcard{flex-shrink:0;width:195px;border-radius:18px;overflow:hidden;background:var(--card2);border:1px solid var(--border);cursor:pointer;transition:transform .2s}
-.featcard:active{transform:scale(.97)}
-.featthumb{position:relative}
-.featthumb img{width:100%;height:135px;object-fit:contain;background:#07041a;padding:10px;display:block}
-.featbadge{position:absolute;top:8px;left:8px;background:linear-gradient(135deg,var(--gold),#e67e00);color:#000;font-size:10px;font-weight:800;padding:3px 8px;border-radius:99px}
-.featbody{padding:10px 12px 12px}
-.featname{font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.featprice{font-size:13px;font-weight:800;color:var(--neon)}
-.featbtn{margin-top:8px;width:100%;padding:7px;border:none;border-radius:9px;background:linear-gradient(135deg,var(--purple),#5200cc);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer}
-
 /* PRODUCT GRID */
-.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;padding:0 12px 100px}
-.pcard{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;cursor:pointer;transition:transform .18s}
-.pcard:active{transform:scale(.97)}
-.pthumb{position:relative;background:#07041a;aspect-ratio:1;overflow:hidden}
-.pthumb img{width:100%;height:100%;object-fit:contain;padding:12px;transition:transform .3s;display:block}
-.pcard:hover .pthumb img{transform:scale(1.07)}
-.pinb{position:absolute;top:8px;left:8px;background:linear-gradient(135deg,var(--gold),#e67e00);color:#000;font-size:10px;font-weight:800;padding:3px 8px;border-radius:99px}
-.pbody{padding:11px 12px 13px}
-.pname{font-size:13px;font-weight:700;color:#fff;margin-bottom:5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.35}
-.pprice{font-size:15px;font-weight:800;color:var(--neon);margin-bottom:10px}
-.pdiv{height:1px;background:var(--border);margin-bottom:10px}
-.pbtn{width:100%;padding:9px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--purple),#5200cc);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
+.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 12px 100px}
+.pcard{
+  background:var(--card);border:1px solid var(--border);border-radius:16px;
+  overflow:hidden;cursor:pointer;transition:transform .18s,box-shadow .18s;
+  display:flex;flex-direction:column;
+}
+.pcard:active{transform:scale(.96);box-shadow:0 0 18px rgba(155,48,255,.25)}
+.pthumb{
+  position:relative;width:100%;aspect-ratio:4/3;
+  background:#08051a;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.pthumb img{width:100%;height:100%;object-fit:contain;padding:6px;display:block;transition:transform .35s}
+.pcard:hover .pthumb img{transform:scale(1.06)}
+.pinb{position:absolute;top:6px;left:6px;background:linear-gradient(135deg,var(--gold),#e67e00);color:#000;font-size:9px;font-weight:800;padding:2px 7px;border-radius:99px}
+.pbody{padding:8px 10px 10px;display:flex;flex-direction:column;flex:1}
+.pname{font-size:12px;font-weight:700;color:#fff;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.35;min-height:2.7em}
+.pprice{font-size:13px;font-weight:800;color:var(--neon);margin-bottom:7px;margin-top:auto}
+.pdiv{height:1px;background:var(--border);margin-bottom:7px}
+.pbtn{width:100%;padding:8px;border:none;border-radius:9px;background:linear-gradient(135deg,var(--purple),#5200cc);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px}
 
 .empty{grid-column:1/-1;text-align:center;padding:50px 20px;color:var(--muted);font-size:14px}
 .empty span{font-size:38px;display:block;margin-bottom:10px}
@@ -157,6 +153,7 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 
 <!-- APP -->
 <div id="app">
+
   <nav class="navbar">
     <div class="logo">🛒 IPUNGG<b>SHOP</b></div>
     <button class="hamburger" onclick="toggleMenu()">☰</button>
@@ -230,6 +227,32 @@ setTimeout(function(){
   app.style.display='block';
   setTimeout(function(){ ws.style.display='none'; },650);
 },2600);
+
+// Fungsi UI dasar — plain script supaya langsung ready
+window.toggleMenu=function(){
+  document.getElementById('sideMenu').classList.toggle('open');
+  document.getElementById('sideOv').classList.toggle('open');
+};
+window.closeAll=function(){
+  var om=document.getElementById('orderModal');
+  var pm=document.getElementById('payModal');
+  if(om) om.classList.remove('on');
+  if(pm) pm.classList.remove('on');
+};
+window.nextPay=function(){
+  var n=document.getElementById('buyerName');
+  if(!n||!n.value.trim()){
+    var t=document.getElementById('toast');
+    if(t){t.innerText='⚠️ Isi nama kamu dulu!';t.classList.add('on');setTimeout(function(){t.classList.remove('on')},2800);}
+    return;
+  }
+  document.getElementById('orderModal').classList.remove('on');
+  document.getElementById('payModal').classList.add('on');
+};
+window.setFname=function(i){
+  var f=document.getElementById('fname');
+  if(f) f.innerText=i.files[0]?i.files[0].name:'';
+};
 </script>
 
 <!-- FIREBASE CONFIG -->
@@ -257,6 +280,7 @@ const db=getDatabase(fa);
 const rp=n=>new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',minimumFractionDigits:0}).format(n);
 const g=id=>document.getElementById(id);
 let st={},sel={},ac='all';
+window.__prods=[];
 
 onValue(ref(db,'store'),snap=>{
   st=snap.val()||{settings:{},products:{},categories:{}};
@@ -282,29 +306,33 @@ function draw(){
     +cats.map(c=>`<div class="cat ${ac===c.name?'on':''}" onclick="_fc('${c.name}')">${c.name}</div>`).join('');
 
   const all=Object.values(st.products||{});
-  const pinned=all.filter(x=>x.pinned);
-  const grid=ac==='all'?all:all.filter(x=>x.category===ac);
+  window.__prods=all;
 
-  g('featLabel').style.display=pinned.length?'block':'none';
-  g('featured').innerHTML=pinned.map(x=>`
-    <div class="featcard" onclick='_od(${JSON.stringify(x).replace(/'/g,"&#39;")})'>
-      <div class="featthumb">
-        <img src="${x.thumbnail||''}" onerror="this.src=''">
-        <div class="featbadge">⭐ PINNED</div>
-      </div>
-      <div class="featbody">
-        <div class="featname">${x.name||''}</div>
-        <div class="featprice">${rp(x.price||0)}</div>
-        <button class="featbtn">ORDER 💖</button>
-      </div>
-    </div>`).join('');
+  const all=Object.values(st.products||{});
+  window.__prods=all;
+
+  let grid;
+  if(ac==='all'){
+    const pinned=all.filter(x=>x.pinned);
+    const rest=all.filter(x=>!x.pinned);
+    grid=[...pinned,...rest];
+  } else {
+    const catAll=all.filter(x=>x.category===ac);
+    const catPinned=catAll.filter(x=>x.pinned);
+    const catRest=catAll.filter(x=>!x.pinned);
+    grid=[...catPinned,...catRest];
+  }
+
+  g('featLabel').style.display='none';
+  g('featured').innerHTML='';
 
   if(!grid.length){
     g('products').innerHTML=`<div class="empty"><span>📦</span>Belum ada produk</div>`;
     return;
   }
-  g('products').innerHTML=grid.map(x=>`
-    <div class="pcard">
+  g('products').innerHTML=grid.map(x=>{
+    const idx=all.indexOf(x);
+    return `<div class="pcard">
       <div class="pthumb">
         <img src="${x.thumbnail||''}" onerror="this.src=''">
         ${x.pinned?'<div class="pinb">⭐ PIN</div>':''}
@@ -313,17 +341,22 @@ function draw(){
         <div class="pname">${x.name||'Produk'}</div>
         <div class="pprice">${rp(x.price||0)}</div>
         <div class="pdiv"></div>
-        <button class="pbtn" onclick='_od(${JSON.stringify(x).replace(/'/g,"&#39;")})'>🛒 Order Sekarang</button>
+        <button class="pbtn" onclick="_od(${idx})">🛒 Order Sekarang</button>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 window._fc=c=>{ac=c;draw()};
-window._od=x=>{sel=x;g('oImg').src=x.thumbnail||'';g('oName').innerText=x.name||'';g('oPrice').innerText=rp(x.price||0);g('orderModal').classList.add('on')};
-window.nextPay=()=>{if(!g('buyerName').value.trim()){toast('⚠️ Isi nama kamu dulu!');return}g('orderModal').classList.remove('on');g('payModal').classList.add('on')};
-window.closeAll=()=>{g('orderModal').classList.remove('on');g('payModal').classList.remove('on')};
-window.toggleMenu=()=>{g('sideMenu').classList.toggle('open');g('sideOv').classList.toggle('open')};
-window.setFname=i=>{g('fname').innerText=i.files[0]?i.files[0].name:''};
+window._od=idx=>{
+  const x=window.__prods[idx];
+  if(!x)return;
+  sel=x;
+  g('oImg').src=x.thumbnail||'';
+  g('oName').innerText=x.name||'';
+  g('oPrice').innerText=rp(x.price||0);
+  g('orderModal').classList.add('on');
+};
 
 window.send=async()=>{
   const file=g('proof').files[0];
@@ -345,5 +378,5 @@ window.send=async()=>{
 function toast(msg){const t=g('toast');t.innerText=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2800)}
 </script>
 </body>
-  </html>
-  
+      </html>
+    
